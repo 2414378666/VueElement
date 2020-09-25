@@ -1,11 +1,3 @@
-// import Vue from 'vue'
-// import { Button, Form, FormItem, Input} from 'element-ui'
-
-// Vue.use(Button)
-// Vue.use(Form)
-// Vue.use(FormItem)
-// Vue.use(Input)
-
 import Vue from 'vue';
 import {
   Pagination,
@@ -54,7 +46,6 @@ import {
   Col,
   Upload,
   Progress,
-  Spinner,
   Badge,
   Card,
   Rate,
@@ -133,7 +124,6 @@ Vue.use(Row);
 Vue.use(Col);
 Vue.use(Upload);
 Vue.use(Progress);
-Vue.use(Spinner);
 Vue.use(Badge);
 Vue.use(Card);
 Vue.use(Rate);

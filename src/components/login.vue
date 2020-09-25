@@ -65,6 +65,8 @@ export default {
           return this.$message.error('账号或者密码错误');
         } else {
           sessionStorage.setItem('token', res.data.token);
+          //接口暂时失效时
+          // sessionStorage.setItem('token', 'IIsToken');
           this.$router.push('/home')
           return this.$message.success('登录成功')
         }
@@ -74,7 +76,7 @@ export default {
 }
 </script>
 
-<style lang="less" >
+<style scoped lang="less">
   @w: 600px;
   @h: 400px;
   @sw: 200px;
