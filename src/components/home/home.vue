@@ -16,7 +16,9 @@
           <!-- 侧边栏菜单区 -->
           <el-menu background-color="#333744" text-color="#fff" 
           active-text-color="#409eff" unique-opened
-          :collapse="flag" :collapse-transition="false" router :default-active="active">
+          :collapse="flag" :collapse-transition="false" 
+          router :default-active="active" ref="menu"
+          @open="handleOpen">
             <!-- 一级菜单 -->
             <el-submenu v-for="(item, index) in menulist" :index="item.id + ''" :key="item.id">
               <!-- 模板区 -->
@@ -25,9 +27,8 @@
                 <span>{{item.authName}}</span>
               </template>
               <!-- 二级菜单 -->
-              <el-menu-item v-for="itemson in item.children" 
-              :index="itemson.path" :key="itemson.id"
-              @click="saveNavState(itemson.path)">
+              <el-menu-item :index="'/' + itemson.path" v-for="itemson in item.children" 
+              :key="itemson.id" @click="saveNavState(itemson.path)">
                 <template slot="title">
                   <i class="el-icon-menu"></i>
                   <span>{{itemson.authName}}</span>
@@ -47,6 +48,7 @@
 </template>
 
 <script>
+import bus from '../../utils/bus'
 export default	{
   name:	'home',
   data() {
@@ -65,6 +67,8 @@ export default	{
       flag: false,
       //被激活的链接地址
       active: '',
+      //当前激活的标签页id
+      menuid: ''
     }
   },
   created() {
@@ -72,6 +76,13 @@ export default	{
     this.getMenuList()
     //创建后就把左侧默认点击赋值
     this.active = sessionStorage.getItem('active')
+  },
+  mounted() {
+    bus.$on('getpath', () => {
+      window.sessionStorage.setItem('active', '/home')
+      this.active = sessionStorage.getItem('active')
+      this.$refs.menu.close(this.menuid)
+    })
   },
   methods: {
     remtoken() {
@@ -87,9 +98,13 @@ export default	{
     toggleclick() {
       this.flag = !this.flag
     },
+    // 把当前点击的path保存到浏览器
     saveNavState(state) {
       let state2 = '/' + state
       window.sessionStorage.setItem('active', state2)
+    },
+    handleOpen(key) {
+      this.menuid = key
     },
   },
 }

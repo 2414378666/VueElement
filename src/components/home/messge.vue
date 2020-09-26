@@ -1,16 +1,24 @@
 <template>
   <div id="name">
-    我是什么都没点时的默认文字
+    <div class="data">管理时间，做时间的主人</div>
+    <el-calendar v-model="value">
+    </el-calendar>
   </div>
 </template>
 
 <script>
 export default	{
   name:	'name',
-
+  data() {
+    return {
+      value: new Date()
+    }
+  },
 }
 </script>
 
 <style scoped>
-
+  .data {
+    padding-bottom: 10px;
+  }
 </style>

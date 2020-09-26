@@ -2,8 +2,8 @@
   <div id="Users">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item><a href="/">用户管理</a></el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
 
@@ -54,13 +54,19 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-tooltip effect="dark" content="修改" placement="top" :enterable="false">
-              <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)"></el-button>
+              <el-button type="primary" icon="el-icon-edit" 
+              size="mini" @click="showEditDialog(scope.row.id)">
+              </el-button>
             </el-tooltip>
             <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
-              <el-button type="danger" icon="el-icon-delete" size="mini" @click="openUsers(scope.row.id)"></el-button>
+              <el-button type="danger" icon="el-icon-delete" 
+              size="mini" @click="openUsers(scope.row.id)">
+              </el-button>
             </el-tooltip>
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-              <el-button type="danger" icon="el-icon-connection" size="mini" class="elb"></el-button>
+              <el-button type="warning" icon="el-icon-connection" 
+              size="mini" class="elb" @click="setRole(scope.row)">
+              </el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -125,6 +131,30 @@
         </span>
       </el-dialog>
     </el-card>
+
+    <el-dialog title="分配角色" :visible.sync="setRoleDlalogVisible"
+    width="30%" :before-close="handleClose" @close="userdialogclose">
+      <div>
+        <p>当前的角色：{{userinfo.username}}</p>
+        <p>当前的身份：{{userinfo.role_name}}</p>
+        <p>分配新角色
+          <template>
+            <el-select v-model="selectedRoleId" placeholder="请选择">
+              <el-option
+              v-for="item in rolesList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id">
+              </el-option>
+            </el-select>
+          </template>
+        </p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRoleDlalogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -208,7 +238,15 @@ export default	{
           { required: true, message: '请输入手机号', trigger: 'blur'},
           { validator: checkmobile, trigger: 'blur'}
         ]
-      }
+      },
+      //分配角色的对话框开启关闭与否
+      setRoleDlalogVisible: false,
+      //当前点击分配角色的角色信息
+      userinfo: '',
+      //所有角色的数据列表
+      rolesList: '',
+      //已选中的角色
+      selectedRoleId: ''
     }
   },
   created() {
@@ -224,8 +262,9 @@ export default	{
       if(query.meta.status == 200) {
         this.userList = query.data.users
         this.total = query.data.total
+        return this.$message.success(query.meta.msg)
       } else {
-        return this.$message.error('获取用户数据失败')
+        return this.$message.error(query.meta.msg)
       }
     },
     //监听每次展示几个数据
@@ -251,7 +290,7 @@ export default	{
     resetFields() {
       this.$refs.form.resetFields()
     },
-    //点击添加用户确定按钮后触发
+    //提交添加用户请求
     adduser() {
       this.$refs.form.validate(async flag => {
         //校验失败后
@@ -268,7 +307,7 @@ export default	{
         this.querys()
       })
     },
-    //点击取消后出现修改对话框和获取对应id的数据
+    //点击修改后出现修改对话框和提交修改请求
     async showEditDialog(id) {
       this.userlogVisible = true
       this.modificationId = id
@@ -278,7 +317,7 @@ export default	{
       }
       this.editfrom = res.data
     },
-    //点击确定修改用户数据时触发axios
+    //提交修改用户信息
     EditSubmitUser() {
       this.$refs.editfromref.validate(async flag => {
         if(!flag) return this.$message.error('验证失败请重新输入')
@@ -296,7 +335,9 @@ export default	{
       this.userlogVisible = false
       this.$refs.editfromref.resetFields()
     },
+    //提交删除用户操作
     async openUsers(id) {
+      // 是否删除弹窗
       const dtus = await this.$confirm(
         '此操作将永久删除该用户, 是否继续?', 
         '提示', 
@@ -305,11 +346,36 @@ export default	{
       cancelButtonText: '取消',
       type: 'warning'
       }).catch(error => error)
+      //删除成不成功
       if('cancel' == dtus) return
       const {data: res} = await this.$http.delete('users/' + id)
       if(res.meta.status != 200) return this.$message.error(res.meta.msg)
       this.$message.success(res.meta.msg)
       this.querys()
+    },
+    async setRole(row) {
+      this.setRoleDlalogVisible = true
+      this.userinfo = row
+      const {data: res} = await this.$http.get('roles/')
+      console.log(res);
+      if(res.meta.status != 200) return this.$message.error(res.meta.msg)
+      this.rolesList = res.data
+    },
+    // 点击按钮分配角色
+    async saveRoleInfo() {
+      if(!this.selectedRoleId) {
+        return this.$message.error('您还没有选择新的角色')
+      }
+      const {data: res} = await this.$http.put(`users/${this.userinfo.id}/role`,
+      {rid: this.selectedRoleId})
+      if(res.meta.status != 200) return this.$message.error(res.meta.msg)
+      this.$message.success(res.meta.msg)
+      this.setRoleDlalogVisible = false
+      this.querys()
+    },
+    //修改角色对话框关闭后回调
+    userdialogclose() {
+      this.selectedRoleId = ''
     }
   }
 }

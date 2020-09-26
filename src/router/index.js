@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import bus from '../utils/bus'
 
 const Login = () => import('components/login')
 const Home = () => import('components/home/home')
@@ -70,18 +71,22 @@ const routes = [
 
 const router = new Router({
   routes,
-  // mode : 'history',
+  mode : 'history',
 })
 
+// try {
 //路由守卫 当触发路由则做判断
 router.beforeEach((to , from, next) => {
   //记得return 只要满足一个条件的时候要return
   if(to.path == '/login') {
     return next()
-  } 
+  }
   const token = sessionStorage.getItem('token')
   if (!token) {
     return next('/login')
+  }
+  if(to.path == '/home') {
+    bus.$emit('getpath')
   }
   next()
 })
