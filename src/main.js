@@ -7,10 +7,13 @@ import less from 'less'
 import 'assets/font_1869755_mu83kg9mx9n/iconfont.css'
 import axios from 'axios'
 import VueBus from 'vue-bus'
+import TreeTable from 'vue-table-with-tree-grid'
 
 Vue.prototype.axios = axios
 Vue.use(less)
 Vue.use(VueBus)
+
+Vue.component('tree-table', TreeTable)
 
 Vue.config.productionTip = false
 

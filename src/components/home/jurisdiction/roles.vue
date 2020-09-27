@@ -65,6 +65,7 @@
           <el-table-column
             label="操作">
             <template slot-scope="scope">
+              <!-- 处于上方的文字提醒 -->
               <el-tooltip effect="dark" content="修改" placement="top" :enterable="false">
                 <el-button type="primary" icon="el-icon-edit" 
                 size="mini">编辑</el-button>
