@@ -19,7 +19,7 @@
           </el-form-item>
           <el-form-item label="父级分类：">
             <!-- options：数据源 -->
-            <!-- props：指定配置对象 -->
+            <!-- props：指定配置对象 v-model选择后的id列表-->
             <el-cascader
               v-model="selectedKeys"
               :options="cateList"

@@ -10,6 +10,9 @@ import VueBus from 'vue-bus'
 import TreeTable from 'vue-table-with-tree-grid'
 
 Vue.prototype.axios = axios
+
+Vue.prototype.$bus = new Vue()
+
 Vue.use(less)
 Vue.use(VueBus)
 

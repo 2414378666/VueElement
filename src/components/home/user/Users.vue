@@ -265,6 +265,10 @@ export default	{
         return this.$message.success(query.meta.msg)
       } else {
         return this.$message.error(query.meta.msg)
+        
+        this.$bus.$on('getlist', data => {
+          console.log(data);
+        })
       }
     },
     //监听每次展示几个数据
