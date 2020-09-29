@@ -192,7 +192,9 @@ export default	{
     //当级联选择发生变化时
     catelistChange() {
       if(this.selectedCateKeys.length != 3) {
+        //级联选择器的id清空
         this.selectedCateKeys = []
+        //下面属性页清空
         this.TableData = []
         this.tabPaneflag = true
         return
