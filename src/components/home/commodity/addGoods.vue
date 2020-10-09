@@ -226,11 +226,10 @@ export default	{
           return this.$message.error('请先把所有表单必填项填写完毕')
         }
         //添加的业务逻辑
+        //深拷贝
         const from = _.cloneDeep(this.addRules)
         from.goods_cat = from.goods_cat.join(',')
         //处理动态属性
-        // console.log(this.manyTableData);
-        // console.log(this.onlyTableData);
         this.manyTableData.forEach(item => {
           const newInfo = { 
             attr_id: item.attr_id,
@@ -246,6 +245,7 @@ export default	{
           }
           this.addRules.attrs.push(newInfo)
         })
+        //将新的数据存入深拷贝中
         from.attrs = this.addRules.attrs
         const {data: res} = await this.$http.post('goods', from)
         if(res.meta.status != 201) {
