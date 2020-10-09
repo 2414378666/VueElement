@@ -15,7 +15,11 @@
 <script>
 export default	{
   name:	'OrderList',
-
+  data() {
+    return {
+      
+    }
+  }
 }
 </script>
 

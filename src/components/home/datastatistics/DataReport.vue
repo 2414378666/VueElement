@@ -15,7 +15,11 @@
 <script>
 export default	{
   name:	'DataReport',
-
+  data() {
+    return {
+      
+    }
+  }
 }
 </script>
 
