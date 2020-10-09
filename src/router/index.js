@@ -13,6 +13,7 @@ const ProductList = () => import('components/home/commodity/ProductList')
 const SortingParameter = () => import('components/home/commodity/SortingParameter')
 const OrderList = () => import('components/home/ordermanagement/OrderList')
 const DataReport = () => import('components/home/datastatistics/DataReport')
+const AddGoods = () => import('components/home/commodity/addGoods')
 
 Vue.use(Router)
 
@@ -28,7 +29,7 @@ const routes = [
   {
     path: '/home',
     component: Home,
-    children : [
+    children: [
       {
         path: '/home',
         component: Messge
@@ -51,7 +52,7 @@ const routes = [
       },
       {
         path: '/goods',
-        component: GoodsCategory
+        component: GoodsCategory,
       },
       {
         path: '/params',
@@ -64,6 +65,10 @@ const routes = [
       {
         path: '/reports',
         component: DataReport
+      },
+      {
+        path: '/goods/addgoods',
+        component: AddGoods
       }
 		]
   }
