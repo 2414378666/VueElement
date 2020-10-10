@@ -42,7 +42,7 @@ export default	{
   data() {
     return {
       //权限页的值
-      rightslist: {},
+      rightslist: [],
     }
   },
   created() {

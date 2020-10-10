@@ -133,7 +133,7 @@
     </el-card>
 
     <el-dialog title="分配角色" :visible.sync="setRoleDlalogVisible"
-    width="30%" :before-close="handleClose" @close="userdialogclose">
+    width="30%" @close="userdialogclose">
       <div>
         <p>当前的角色：{{userinfo.username}}</p>
         <p>当前的身份：{{userinfo.role_name}}</p>
@@ -187,7 +187,7 @@ export default	{
         pagesize: 2
       },
       //用户数据
-      userList: {},
+      userList: [],
       //一共多少个用户数据
       total: 0,
       // 控制添加用户对话框显示隐藏

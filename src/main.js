@@ -15,6 +15,10 @@ import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
+//导入进度条
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
 Vue.prototype.axios = axios
 
 Vue.prototype.$bus = new Vue()
@@ -44,11 +48,20 @@ Vue.config.productionTip = false
 axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/'
 
 //请求拦截器
+//在request拦截器中添加NProgress.start();加载进度条
 axios.interceptors.request.use(config => {
+  NProgress.start();
   //把token添加到axios 每次使用axios发送请求时都会附加一个token
   config.headers.Authorization = window.sessionStorage.getItem('token')
   return config
 })
+
+//在response中停止进度条加载NProgress.done();
+axios.interceptors.response.use(config => {
+  NProgress.done();
+  return config
+})
+
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false

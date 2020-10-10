@@ -103,7 +103,7 @@ export default	{
   data() {
     return {
       // 角色权限列表
-      rolelist: {},
+      rolelist: [],
       // 对话框是否关闭
       dialogVisible: false,
       //所有权限列表
