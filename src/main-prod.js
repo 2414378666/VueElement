@@ -1,23 +1,16 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from 'router/index'
-import './plugins/element.js'
 import 'assets/css/global.css'
-import less from 'less'
 import 'assets/font_1869755_mu83kg9mx9n/iconfont.css'
 import axios from 'axios'
 import VueBus from 'vue-bus'
 import TreeTable from 'vue-table-with-tree-grid'
 //导入富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
-//富文本编辑器样式
-import 'quill/dist/quill.core.css' // import styles
-import 'quill/dist/quill.snow.css' // for snow theme
-import 'quill/dist/quill.bubble.css' // for bubble theme
 
 //导入进度条
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
 
 Vue.prototype.axios = axios
 

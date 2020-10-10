@@ -16,7 +16,20 @@ module.exports = {
         .entry('app')
         .clear()
         .add('./src/main-prod.js')
+      
+      //声明加载外部sdn路径
+      config.set('externals', {
+        vue: 'Vue',
+        'vue-router': 'VueRouter',
+        axios: 'axios',
+        lodash: '_',
+        echarts: 'echarts',
+        nprogress: 'NProgress',
+        'vue-quill-editor': 'VueQuillEditor',
+        less: 'less'
+      })
     }),
+    //开发模式
     config.when(process.env.NODE_ENV === 'development', config => {
       config
         .entry('app')
