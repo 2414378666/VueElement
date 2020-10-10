@@ -16,5 +16,7 @@ module.exports = {
       }
     ],
     ...prodPlugins,
+    //路由懒加载插件
+    '@babel/plugin-syntax-dynamic-import'
   ]
 }

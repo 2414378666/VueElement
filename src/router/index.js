@@ -2,18 +2,26 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import bus from '../utils/bus'
 
-const Login = () => import('components/login')
-const Home = () => import('components/home/home')
-const Users = () => import('components/home/user/Users')
-const Messge = () => import('components/home/messge')
-const Rights = () => import('components/home/jurisdiction/rights')
-const Roles = () => import('components/home/jurisdiction/roles')
-const GoodsCategory = () => import('components/home/commodity/GoodsCategory')
-const ProductList = () => import('components/home/commodity/ProductList')
-const SortingParameter = () => import('components/home/commodity/SortingParameter')
-const OrderList = () => import('components/home/ordermanagement/OrderList')
-const DataReport = () => import('components/home/datastatistics/DataReport')
-const AddGoods = () => import('components/home/commodity/addGoods')
+const Login = () => import(/* webpackChunkName: "group-Login" */ 'components/login')
+
+const Home = () => import(/* webpackChunkName: "group-Home" */ 'components/home/home')
+
+const Users = () => import(/* webpackChunkName: "group-Users" */ 'components/home/user/Users')
+
+const Messge = () => import(/* webpackChunkName: "group-Messge" */ 'components/home/messge')
+
+const Rights = () => import(/* webpackChunkName: "group-jurisdiction" */ 'components/home/jurisdiction/rights')
+const Roles = () => import(/* webpackChunkName: "group-jurisdiction" */ 'components/home/jurisdiction/roles')
+
+const GoodsCategory = () => import(/* webpackChunkName: "group-commodity" */ 'components/home/commodity/GoodsCategory')
+const ProductList = () => import(/* webpackChunkName: "group-commodity" */ 'components/home/commodity/ProductList')
+const SortingParameter = () => import(/* webpackChunkName: "group-commodity" */ 'components/home/commodity/SortingParameter')
+const AddGoods = () => import(/* webpackChunkName: "group-commodity" */ 'components/home/commodity/addGoods')
+
+const OrderList = () => import(/* webpackChunkName: "group-OrderList" */ 'components/home/ordermanagement/OrderList')
+
+const DataReport = () => import(/* webpackChunkName: "group-DataReport" */ 'components/home/datastatistics/DataReport')
+
 
 Vue.use(Router)
 
