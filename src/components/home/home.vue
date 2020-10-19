@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import bus from '../../utils/bus'
+// import bus from '../../utils/bus'
 export default	{
   name:	'home',
   data() {
@@ -78,11 +78,11 @@ export default	{
     this.active = sessionStorage.getItem('active')
   },
   mounted() {
-    bus.$on('getpath', () => {
-      window.sessionStorage.setItem('active', '/home')
-      this.active = sessionStorage.getItem('active')
-      this.$refs.menu.close(this.menuid)
-    })
+    // bus.$on('getpath', () => {
+    //   window.sessionStorage.setItem('active', '/home')
+    //   this.active = sessionStorage.getItem('active')
+    //   this.$refs.menu.close(this.menuid)
+    // })
   },
   methods: {
     remtoken() {

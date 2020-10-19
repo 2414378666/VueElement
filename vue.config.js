@@ -20,7 +20,6 @@ module.exports = {
       //声明加载外部sdn路径
       config.set('externals', {
         vue: 'Vue',
-        'vue-router': 'VueRouter',
         axios: 'axios',
         lodash: '_',
         echarts: 'echarts',

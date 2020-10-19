@@ -1,6 +1,7 @@
 <template>
   <div id="login">
-    <div class="login_main">
+    <canvas id="myCanvas"></canvas>
+      <div class="login_main">
       <!-- 头像区域 -->
       <div class="login_from">
         <img src="~assets/logo.png">
@@ -19,7 +20,6 @@
         </el-form-item>
       </el-form>
     </div>
-
   </div>
 </template>
 
@@ -49,6 +49,27 @@ export default {
       },
       show: true,
     }
+  },
+  mounted() {
+    const width = document.getElementById("myCanvas").width = screen.availWidth;
+    const height = document.getElementById("myCanvas").height = screen.availHeight;
+    const ctx = document.getElementById("myCanvas").getContext("2d");
+    const arr = Array(Math.ceil(width / 10)).fill(0);
+    const str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
+
+    function rain() {
+    	//这里的重点就是每次调用这个方法的时候都会重新绘制一张透明度为0.05的黑色画布来覆盖前图
+    	//所以就会形成人眼中的下雨效果
+        ctx.fillStyle = "rgba(0,0,0,0.05)";
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = "#0f0";
+        arr.forEach(function (value, index) {
+            ctx.fillText(str[Math.floor(Math.random() * str.length)], index * 10, value + 10);
+            arr[index] = value >= height || value > 8888 * Math.random() ? 0 : value + 10;
+        });
+    }
+
+    setInterval(rain, 30);
   },
   methods: {
     remclick() {
@@ -81,6 +102,10 @@ export default {
   @h: 400px;
   @sw: 200px;
   @sh: 200px;
+  body{
+    margin: 0;
+    overflow: hidden;
+  }
   #login {
     height: 100%;
     background-color: #2b4b6b;

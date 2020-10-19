@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import bus from '../utils/bus'
+// import bus from '../utils/bus'
 
 const Login = () => import(/* webpackChunkName: "group-Login" */ 'components/login')
 
@@ -98,9 +98,9 @@ router.beforeEach((to , from, next) => {
   if (!token) {
     return next('/login')
   }
-  if(to.path == '/home') {
-    bus.$emit('getpath')
-  }
+  // if(to.path == '/home') {
+  //   bus.$emit('getpath')
+  // }
   next()
 })
 

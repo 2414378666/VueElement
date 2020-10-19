@@ -4,7 +4,7 @@ import router from 'router/index'
 import 'assets/css/global.css'
 import 'assets/font_1869755_mu83kg9mx9n/iconfont.css'
 import axios from 'axios'
-import VueBus from 'vue-bus'
+// import VueBus from 'vue-bus'
 import TreeTable from 'vue-table-with-tree-grid'
 //导入富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
@@ -14,10 +14,10 @@ import NProgress from 'nprogress'
 
 Vue.prototype.axios = axios
 
-Vue.prototype.$bus = new Vue()
+// Vue.prototype.$bus = new Vue()
 
 Vue.use(less)
-Vue.use(VueBus)
+// Vue.use(VueBus)
 Vue.use(VueQuillEditor)
 
 Vue.component('tree-table', TreeTable)
