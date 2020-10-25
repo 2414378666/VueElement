@@ -119,7 +119,7 @@ export default	{
       queryInfo: {
         query: '',
         pagenum: 1,
-        pagesize: 10
+        pagesize: 5
       },
       //order总条数
       total: 0,
@@ -165,12 +165,14 @@ export default	{
     },
     // 每页显示几条数据
     handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newsize
+      this.queryInfo.pagesize = newSize
+      console.log(this.queryInfo.pagesize);
       this.getOrderList()
     },
     //当前页码数
     handleCurrentChange(newPage) {
       this.queryInfo.pagenum = newPage
+      console.log(this.queryInfo.pagenum);
       this.getOrderList()
     },
     //点击修改地址
@@ -181,6 +183,7 @@ export default	{
     async showProgressBox() {
       this.progressVible = true
       const {data: res} = await this.$http.get('/kuaidi/1106975712662')
+      console.log(res);
       if(res.meta.status != 200) return this.$message.error('获取物流信息失败')
       this.progressInfo = res.data
     },

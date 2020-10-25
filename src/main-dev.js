@@ -5,7 +5,6 @@ import './plugins/element.js'
 import 'assets/css/global.css'
 import 'assets/font_1869755_mu83kg9mx9n/iconfont.css'
 import axios from 'axios'
-// import VueBus from 'vue-bus'
 import TreeTable from 'vue-table-with-tree-grid'
 //导入富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
@@ -14,16 +13,17 @@ import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
+//引入字体图标
+import './assets/font/iconfont.css'
+
 //导入进度条
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-
-Vue.prototype.axios = axios
-
-// Vue.prototype.$bus = new Vue()
+//echarts全局引入
+Vue.prototype.$echarts = window.echarts
 
 Vue.use(less)
-// Vue.use(VueBus)
+
 Vue.use(VueQuillEditor)
 
 Vue.component('tree-table', TreeTable)
@@ -44,7 +44,17 @@ Vue.filter('dateFormat', function(originVal) {
 
 Vue.config.productionTip = false
 
+//管理系统数据接口引入
 axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/'
+// axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/'
+
+Vue.prototype.$http2 = axios.create({
+  baseURL: 'http://127.0.0.1:3000/',
+  timeout: 5000,
+  headers: {
+      'Content-Type': 'text/plain;charset=UTF-8'
+  }
+})
 
 //请求拦截器
 //在request拦截器中添加NProgress.start();加载进度条

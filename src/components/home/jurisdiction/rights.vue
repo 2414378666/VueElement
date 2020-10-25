@@ -32,6 +32,15 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-sizes="[5, 8, 11]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="48">
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -43,6 +52,14 @@ export default	{
     return {
       //权限页的值
       rightslist: [],
+      queryInfo: {
+        //当前页数
+        pagenum: 1,
+        //当前一页展示数量
+        pagesize: 5,
+        //一共多少用户
+        total: 0
+      },
     }
   },
   created() {
@@ -51,13 +68,38 @@ export default	{
   },
   methods: {
     //获取权限列表
-    async rights() {
+    async rights () {
       const {data: res} = await this.$http.get('rights/list',)
-      console.log(res);
       if(res.meta.status != 200) return this.$message.error(res.meta.msg)
-      this.rightslist = res.data
+
+      const allData = res.data
+      this.total = allData.length
+      this.rightslist = []
+      //开始循环数据的下标
+      let allNum = (this.queryInfo.pagenum - 1) * this.queryInfo.pagesize
+      //结束循环数据的下标
+      let endNum = allNum + this.queryInfo.pagesize
+      if(this.total >= endNum) {
+        for(var i=allNum; i<endNum; i++) {
+          this.rightslist.push(allData[i])
+        }
+      } else {
+        for(var i=allNum; i<this.total; i++) {
+          this.rightslist.push(allData[i])
+        }
+      }
       this.$message.success(res.meta.msg)
     },
+    //监听每次展示几个数据
+    handleSizeChange (newSize) {
+      this.queryInfo.pagesize = newSize
+      this.rights()
+    },
+    //监听页码改变的值
+    handleCurrentChange (newPage) {
+      this.queryInfo.pagenum = newPage
+      this.rights()
+    }
   },
 }
 </script>

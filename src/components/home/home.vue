@@ -77,13 +77,6 @@ export default	{
     //创建后就把左侧默认点击赋值
     this.active = sessionStorage.getItem('active')
   },
-  mounted() {
-    // bus.$on('getpath', () => {
-    //   window.sessionStorage.setItem('active', '/home')
-    //   this.active = sessionStorage.getItem('active')
-    //   this.$refs.menu.close(this.menuid)
-    // })
-  },
   methods: {
     remtoken() {
       window.sessionStorage.removeItem('token');

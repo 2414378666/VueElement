@@ -18,7 +18,7 @@
       <!-- 表格区 -->
       <el-table
         :data="goodslist.goods"
-        style="width: 100%"
+        style="width: 100%; margin-top: 10px;"
         stripe border >
         <el-table-column
           type="index"

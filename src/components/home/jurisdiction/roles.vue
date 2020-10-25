@@ -7,7 +7,7 @@
     </el-breadcrumb> 
     <!-- 卡片区域 -->
     <el-card>
-       <el-button type="primary">添加角色</el-button>
+       <el-button type="primary" style="margin-bottom: 10px;" @click="addRoles">添加角色</el-button>
       <template>
         <el-table :data="rolelist" border
         style="width: 100%" >
@@ -179,7 +179,11 @@ export default	{
       this.dialogVisible = false
       this.roleslistfun()
       this.$message.success(res.meta.msg)
-    }
+    },
+    //添加角色权限
+    // addRoles () {
+
+    // }
   }
 }
 </script>

@@ -35,5 +35,9 @@ module.exports = {
         .clear()
         .add('./src/main-dev.js')
     })
+  },
+  devServer: {
+    port: 8999,
+    open: true
   }
 }

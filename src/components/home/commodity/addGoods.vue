@@ -39,10 +39,12 @@
               <el-cascader
                 v-model="addRules.goods_cat"
                 :options="cateList"
-                :props="{ 
-                  label: 'cat_name', 
-                  value: 'cat_id', 
-                  children: 'children' }"
+                :props="{
+                  expandTrigger: 'hover',
+                  label: 'cat_name',
+                  value: 'cat_id',
+                  children: 'children'
+                }"
                 @change="handleChange">
               </el-cascader>
             </el-form-item>
@@ -139,7 +141,7 @@ export default	{
         //商品介绍
         goods_introduce: '',
         //商品参数动态或静态
-        attrs: ''
+        attrs: '',
       },
       //级联选择器数据源
       cateList: [],
@@ -186,6 +188,7 @@ export default	{
       const {data: res} = await this.$http.get('categories/')
       if(res.meta.status != 200) return this.$message.error('获取商品分类失败')
       this.cateList = res.data
+      console.log(this.cateList);
     },
     //当分类选择没有选择三级时 则清空
     handleChange() {
@@ -271,7 +274,7 @@ export default	{
 
 <style scoped >
   .el-steps {
-    margin: 15px 0;
+    margin: 5px 0;
   }
   .el-checkbox {
     margin: 0 10px 0 0 !important;
@@ -281,6 +284,9 @@ export default	{
     height: 100%;
   }
   .addButton {
-    margin-top: 15px;
+    margin-top: 5px;
+  }
+  .el-form-item {
+    margin-bottom: 10px;
   }
 </style>

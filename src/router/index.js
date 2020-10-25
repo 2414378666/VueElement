@@ -21,6 +21,7 @@ const AddGoods = () => import(/* webpackChunkName: "group-commodity" */ 'compone
 const OrderList = () => import(/* webpackChunkName: "group-OrderList" */ 'components/home/ordermanagement/OrderList')
 
 const DataReport = () => import(/* webpackChunkName: "group-DataReport" */ 'components/home/datastatistics/DataReport')
+const SellerPage = () => import(/* webpackChunkName: "group-DataReport" */ 'components/home/datastatistics/SellerPage')
 
 
 Vue.use(Router)
@@ -77,6 +78,10 @@ const routes = [
       {
         path: '/goods/addgoods',
         component: AddGoods
+      },
+      {
+        path: '/sellerpage',
+        component: SellerPage
       }
 		]
   }

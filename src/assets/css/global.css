@@ -1,8 +1,10 @@
 html, body, #app {
+  width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
   min-width: 1366px;
+  overflow: hidden;
 }
 
 .el-breadcrumb {
@@ -16,4 +18,26 @@ html, body, #app {
 
 .ql-editor {
   min-height: 300px;
+}
+
+.com-page {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.DataReport {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.com-chart {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+canvas {
+  width: 100%;
+  border-radius: 20px;
 }
