@@ -1,8 +1,6 @@
 <template>
   <div id="SellerPage">
-    <el-card>
-      <div style="width: 100%; height: 600px;" class="seller" ref="mainChart"></div>
-    </el-card>
+      <div style="width: 100%; height: 200px;" class="seller" ref="mainChart"></div>
   </div>
 </template>
 
@@ -15,8 +13,12 @@ export default	{
       datas: {}, //服务器返回数据
       currentPage: 1, //当前显示页数
       totalPage: 0, //一共有多少页
-      timerId: null //定时器
+      timerId: null, //定时器
+      styleName: ''
     }
+  },
+  beforeMount () {
+    this.styleName = this.$store.state.count
   },
   mounted() {
     //调用初始化
@@ -27,6 +29,14 @@ export default	{
     window.addEventListener('resize', this.screenAdapter)
     //打开窗口之后就调用方法测算窗口大小来改变样式
     this.screenAdapter()
+
+    this.$bus.$on('abc', () => {
+      this.getStyleName()
+      this.chartInstance.dispose() //销毁图表
+      this.initCharts()
+      this.screenAdapter()
+      this.upDateCharts()
+    })
   },
   //当组件销毁后清除定时器
   destroyed () {
@@ -35,9 +45,12 @@ export default	{
     window.removeEventListener('resize', this.screenAdapter)
   },
   methods: {
+    getStyleName () {
+      this.styleName = this.$store.state.count
+    },
     //初始化Echarts 改变样式
     initCharts () {
-      this.chartInstance = this.$echarts.init(this.$refs.mainChart, 'chalk')
+      this.chartInstance = this.$echarts.init(this.$refs.mainChart, this.styleName)
       //初始化图表把除数据的所有设置初始化好 方便维护
       const option = {
         title: { //标题

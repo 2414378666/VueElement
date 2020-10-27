@@ -1,5 +1,5 @@
 <template>
-  <div id="trendPage">
+  <div id="trendPage" ref="abca">
     <!-- 创建一个放置标题和可选项的盒子 -->
     <div class="title">
       <span :style="titleFontSizes" >{{showTitle}}</span>
@@ -9,7 +9,7 @@
       </div>
     </div>
     <!-- echarts的容器盒子 -->
-    <div style="width: 100%; height: 600px;" class="trend" ref="trendChart"></div>
+    <div style="width: 100%; height: 344px;" class="trend" ref="trendChart"></div>
   </div>
 </template>
 
@@ -23,8 +23,13 @@ export default	{
       flag: false, //可选框的下拉与否
       choiceType: 'map', //下拉可选项
       selectTypes: null, //下拉可选项的全部数据
-      titleFontSize: 0 //根据页面大小计算得来的组件尺寸大小
+      titleFontSize: 0, //根据页面大小计算得来的组件尺寸大小
+      styleName: '',
+      timerId: ''
     }
+  },
+  beforeMount () {
+    this.styleName = this.$store.state.count
   },
   mounted() {
      //调用初始化
@@ -35,14 +40,28 @@ export default	{
     window.addEventListener('resize', this.screenAdapter)
     //打开窗口之后就调用方法测算窗口大小来改变样式
     this.screenAdapter()
+    this.startInterval()
+
+    this.$bus.$on('abc', () => {
+      this.getStyleName()
+      this.chartInstance.dispose() //销毁图表
+      this.initCharts()
+      this.screenAdapter()
+      this.upDateCharts()
+    })
   },
   destroyed () {
     //销毁容器大小监听器监听器
     window.removeEventListener('resize', this.screenAdapter)
+    //销毁定时器
+    clearInterval(this.timerId)
   },
   methods: {
+    getStyleName () {
+      this.styleName = this.$store.state.count
+    },
     initCharts () {
-      this.chartInstance = this.$echarts.init(this.$refs.trendChart, 'chalk')
+      this.chartInstance = this.$echarts.init(this.$refs.trendChart, this.styleName)
       //初始化图表把除数据的所有设置初始化好 方便维护
       const option = {
         grid: { //控制图表布局和大小
@@ -69,6 +88,15 @@ export default	{
         }
       }
       this.chartInstance.setOption(option)
+      //当鼠标移入时清除定时器
+      this.$refs.abca.addEventListener('mouseover', () => {
+        clearInterval(this.timerId)
+      })
+      //当鼠标移开时调用定时器函数
+      this.$refs.abca.addEventListener('mouseout', () => {
+        
+        this.startInterval()
+      })
     },
     // 获得数据的方法
     async getData () {
@@ -153,7 +181,7 @@ export default	{
           itemHeight: this.titleFontSize,
           itemGap: this.titleFontSize,
           textStyle: {
-            fontSize: this.titleFontSize / 2
+            fontSize: this.titleFontSize * 1.2
           }
         }
       }
@@ -166,6 +194,7 @@ export default	{
       this.selectTypes = this.datas.type.filter(item => {
         return item.key !== this.choiceType
       })
+      
       this.flag = !this.flag
     },
     //点击下拉框中的一个选项后
@@ -176,7 +205,29 @@ export default	{
       this.upDateCharts()
       //点击选项后隐藏下拉框
       this.flag = false
-    }
+    },
+    startInterval () {
+      //判断定时器是否存在 存在则删除
+      if(this.timerId) {
+        clearInterval(this.timerId)
+      }
+      const circulationArr = [
+        'map', 'seller', 'commodity'
+      ]
+      let num = 0
+      //每循环一次当前页码加一 直到大于总页码数则把当前页码数变回初始
+      this.timerId = setInterval(() => {
+        if(num < 2) {
+          num++
+          this.choiceType = circulationArr[num]
+          this.handleSelect(this.choiceType)
+        } else if(num >= 2) {
+          num = 0
+          this.choiceType = circulationArr[num]
+          this.handleSelect(this.choiceType)
+        }
+      }, 3000)
+    },
   },
   computed: {
     //返回选择的标题

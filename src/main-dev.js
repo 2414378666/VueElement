@@ -16,6 +16,8 @@ import 'quill/dist/quill.bubble.css' // for bubble theme
 //引入字体图标
 import './assets/font/iconfont.css'
 
+//bus总线
+Vue.prototype.$bus = new Vue()
 //导入进度条
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'

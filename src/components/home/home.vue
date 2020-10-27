@@ -5,7 +5,7 @@
       <el-header class="header">
         <div>
           <i class="iconfont icon-logo"></i>
-          <span>电商后台管理系统</span>
+          <span style="fontSize: 30px;">后台管理页面</span>
         </div>
         <el-button type="info" size="small" @click="remtoken" class="buttom">退出登录</el-button>
       </el-header>
@@ -40,7 +40,9 @@
         </el-aside>
         <!-- 主体区域 -->
         <el-main class="main">
-          <router-view/>
+          <keep-alive>
+            <router-view/>
+          </keep-alive>
         </el-main>
       </el-container>
     </el-container>
@@ -142,6 +144,8 @@ export default	{
     }
   }
   .main {
+    width: 1230px;
+    height: 690px;
     background-color: #eaedf1;
   }
 </style>

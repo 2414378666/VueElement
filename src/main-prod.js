@@ -8,6 +8,8 @@ import TreeTable from 'vue-table-with-tree-grid'
 //导入富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
 
+//bus总线
+Vue.prototype.$bus = new Vue()
 //导入进度条
 import NProgress from 'nprogress'
 
@@ -16,7 +18,7 @@ Vue.prototype.axios = axios
 Vue.prototype.$echarts = window.echarts
 
 Vue.use(less)
-// Vue.use(VueBus)
+
 Vue.use(VueQuillEditor)
 
 Vue.component('tree-table', TreeTable)

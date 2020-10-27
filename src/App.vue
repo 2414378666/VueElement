@@ -7,12 +7,10 @@
 </template>
 
 <script>
-
+import { store } from './store/vuex'
 export default {
   name: 'app',
-  components: {
-
-  }
+  store
 }
 </script>
 
